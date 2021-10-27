@@ -12,9 +12,16 @@ async function conectar() {
   return conexao
 }
 
+export async function buscarUsuario(usuario, senha) {
+  const conexao = await conectar()
+  const sql = 'select * from usuario where nome=? and senha=?;'
+  const [linhas] = await conexao.query(sql, [usuario, senha])
+  return linhas
+}
+
 export async function listarProdutos() {
   const conexao = await conectar()
   const sql = 'select * from produtos;'
-  const [linhas] = await conexao.query(sql)
-  return linhas
+  const [produtos] = await conexao.query(sql)
+  return produtos
 }
