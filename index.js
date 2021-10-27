@@ -1,8 +1,8 @@
-const banco = require('./banco')
+import { listarProdutos } from './banco.js'
 
 async function teste() {
   console.log('SELECT * FROM produtos')
-  const livros = await banco.listarProdutos()
+  const livros = await listarProdutos()
   console.log(livros)
 }
 teste()
