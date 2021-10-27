@@ -11,3 +11,14 @@ async function conectar()
     global.minhaConexao = ccc
     return ccc
 }
+
+async function listarProdutos()
+{
+    const conexao = await conectar()
+    //const sql = 'select * from produtos ;'
+    const sql = 'select * from produtos;'
+    const [linhas] = await conexao.query(sql)
+    return linhas
+}
+
+module.exports = {listarProdutos}
