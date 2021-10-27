@@ -1,8 +1,8 @@
 async function conectar() {
   /* if (global.minhaConexao && global.minhaConexao.state != 'disconected')
-    {
-        return global.minhaConexao
-    } */
+  {
+    return global.minhaConexao
+  } */
 
   const mysql = require('mysql2/promise')
   //                                        mysql://usuario:senha@servidor:porta/nomeBanco
@@ -12,9 +12,9 @@ async function conectar() {
 }
 
 async function listarProdutos() {
-  const conexao = await conectar();
+  const conexao = await conectar()
   const sql = 'select * from produtos;'
-  const [linhas] = await conexao.query(sql);
+  const [linhas] = await conexao.query(sql)
   return linhas
 }
 

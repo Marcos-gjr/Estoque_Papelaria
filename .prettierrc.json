@@ -2,7 +2,6 @@
   "trailingComma": "none",
   "semi": false,
   "singleQuote": true,
-  "jsxSingleQuote": true,
   "bracketSpacing": true,
   "arrowParens": "avoid",
   "tabWidth": 2,
