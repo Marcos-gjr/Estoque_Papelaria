@@ -5,7 +5,7 @@ import { listarProdutos, buscarUsuario } from './banco.js'
 import http from 'http'
 // TO DO remover body-parser
 
-/* const porta = 3000 */
+const porta = 3001
 
 const app = express()
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 app.engine('jsx', createEngine())
 app.set('view engine', 'jsx')
 app.set('views', './views')
-app.set('port', 3000)
+app.set('port', porta)
 
 app.get('/', (req, res) => {
   res.render('login')
@@ -22,8 +22,8 @@ app.get('/', (req, res) => {
 
 app.get('/listagemprodutos', async (req, res) => {
   if (req.session.usuario) {
-    /* const produtos = await listarProdutos() */
-    res.render('listagemprodutos', { title: 'John' })
+    const produtos = await listarProdutos()
+    res.render('listagemprodutos', { produtos, method: 'get' })
   } else {
     res.render('404')
   }
@@ -39,7 +39,8 @@ app.post('/', async (req, res) => {
 
   if (achou) {
     req.session.usuario = usuarioEntrando
-    res.render('listagemprodutos')
+    const produtos = await listarProdutos()
+    res.render('listagemprodutos', { produtos, method: 'post' })
   } else {
     res.render('login')
   }

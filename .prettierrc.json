@@ -6,5 +6,6 @@
   "arrowParens": "avoid",
   "tabWidth": 2,
   "printWidth": 140,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "jsxSingleQuote": true
 }

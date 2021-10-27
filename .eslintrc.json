@@ -9,7 +9,12 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["import"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "plugins": ["import", "react"],
   "rules": {
     "no-unused-vars": "warn",
     "comma-dangle": ["warn", "never"],
@@ -19,6 +24,8 @@
     "arrow-parens": ["warn", "as-needed"],
     "import/no-unresolved": 2,
     "import/no-commonjs": 2,
-    "import/extensions": [2, "ignorePackages"]
+    "import/extensions": [2, "ignorePackages"],
+    "jsx-quotes": ["warn", "prefer-single"],
+    "react/prop-types": 0
   }
 }
