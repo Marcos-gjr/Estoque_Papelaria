@@ -9,12 +9,16 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "plugins": ["import"],
   "rules": {
     "no-unused-vars": "warn",
     "comma-dangle": ["warn", "never"],
     "quotes": ["warn", "single"],
     "semi": ["warn", "never"],
     "max-len": ["warn", { "code": 140 }],
-    "arrow-parens": ["warn", "as-needed"]
+    "arrow-parens": ["warn", "as-needed"],
+    "import/no-unresolved": 2,
+    "import/no-commonjs": 2,
+    "import/extensions": [2, "ignorePackages"]
   }
 }
