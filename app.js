@@ -3,9 +3,9 @@ import session from 'express-session'
 import { createEngine } from 'express-react-views'
 import { listarProdutos, buscarUsuario } from './banco.js'
 import http from 'http'
+import { config } from 'dotenv'
+config()
 // TO DO remover body-parser
-
-const porta = 3001
 
 const app = express()
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }))
 app.engine('jsx', createEngine())
 app.set('view engine', 'jsx')
 app.set('views', './views')
-app.set('port', porta)
+app.set('port', process.env.porta)
 
 app.get('/', (req, res) => {
   res.render('login')
@@ -48,5 +48,5 @@ app.post('/', async (req, res) => {
 
 /* app.listen(porta) */
 http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'))
+  console.log('Express server listening on port http://localhost:' + app.get('port') + '/')
 })
