@@ -6,4 +6,6 @@ Projeto do curso de engenharia de software para o desenvolvimento de um site uti
 
 criar arquivo '.env'
 
+e colocar dentro:
+
 porta=3000
