@@ -9,3 +9,6 @@ criar arquivo '.env'
 e colocar dentro:
 
 porta=3000
+
+Para iniciar o programa 
+npm run nm
