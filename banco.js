@@ -25,3 +25,11 @@ export async function listarProdutos() {
   const [produtos] = await conexao.query(sql)
   return produtos
 }
+/*async function inserirProduto(produto)
+{
+    const conexao = await conectar()
+    const sql = 'insert into livros (nome, quantidade, descricao) values (?,?,?);'
+    return await conexao.query(sql, [produto.nome, produto.qtd, produto.des])
+   
+}
+*/
