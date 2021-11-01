@@ -25,11 +25,20 @@ export async function listarProdutos() {
   const [produtos] = await conexao.query(sql)
   return produtos
 }
+
+export async function recuperarProduto(id) {
+  const conexao = await conectar()
+  const sql = 'select * from produtos where codigo=?;'
+  const [produto] = await conexao.query(sql, [id])
+
+  if (produto && produto.length > 0) return produto[0]
+  else return {}
+}
+
 /*async function inserirProduto(produto)
 {
     const conexao = await conectar()
     const sql = 'insert into livros (nome, quantidade, descricao) values (?,?,?);'
     return await conexao.query(sql, [produto.nome, produto.qtd, produto.des])
-   
 }
 */

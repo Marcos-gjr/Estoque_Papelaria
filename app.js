@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import { createEngine } from 'express-react-views'
-import { listarProdutos, buscarUsuario } from './banco.js'
+import { listarProdutos, buscarUsuario, recuperarProduto } from './banco.js'
 import http from 'http'
 import { config } from 'dotenv'
 config()
@@ -16,8 +16,13 @@ app.set('view engine', 'jsx')
 app.set('views', './views')
 app.set('port', process.env.porta)
 
-app.get('/', (req, res) => {
-  res.render('login')
+app.get('/', async (req, res) => {
+  if (req.session.usuario) {
+    const produtos = await listarProdutos()
+    res.render('listagemprodutos', { produtos, method: 'get' })
+  } else {
+    res.render('login')
+  }
 })
 
 app.get('/listagemprodutos', async (req, res) => {
@@ -43,6 +48,21 @@ app.post('/', async (req, res) => {
     res.render('listagemprodutos', { produtos, method: 'post' })
   } else {
     res.render('login')
+  }
+})
+
+app.get('/alterar/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
+
+  const produto = await recuperarProduto(codigo)
+  if (produto == {}) {
+    res.render('erro', { mensagem: 'Produto inexistente', link: '/listagemprodutos' })
+  } else {
+    res.render('produto', {
+      titulo: 'Alteração de Produtos',
+      produto,
+      action: '/alterar/' + codigo
+    })
   }
 })
 
