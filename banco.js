@@ -1,5 +1,7 @@
 import mysql from 'mysql2/promise'
 
+//função para a conexão com o banco de dados
+//function for database connection
 async function conectar() {
   /* if (global.minhaConexao && global.minhaConexao.state != 'disconected')
   {
@@ -12,6 +14,8 @@ async function conectar() {
   return conexao
 }
 
+//função para achar usuario e senha 
+//function to find username and password
 export async function buscarUsuario(usuario, senha) {
   const conexao = await conectar()
   const sql = 'select * from usuario where nome=? and senha=?;'
@@ -19,6 +23,8 @@ export async function buscarUsuario(usuario, senha) {
   return linhas
 }
 
+// Função para listagem de produtos
+//Product listing function
 export async function listarProdutos() {
   const conexao = await conectar()
   const sql = 'select * from produtos;'
@@ -26,6 +32,8 @@ export async function listarProdutos() {
   return produtos
 }
 
+// Função para procurar o produto e suas informações 
+//Function to search for the product and its information
 export async function recuperarProduto(id) {
   const conexao = await conectar()
   const sql = 'select * from produtos where codigo=?;'
@@ -35,6 +43,8 @@ export async function recuperarProduto(id) {
   else return {}
 }
 
+// (ini) função para incerir um novo produto
+// function to start a new product
 /*async function inserirProduto(produto)
 {
     const conexao = await conectar()

@@ -16,6 +16,8 @@ app.set('view engine', 'jsx')
 app.set('views', './views')
 app.set('port', process.env.porta)
 
+//Função para entrada com usuario
+//User input function
 app.get('/', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
@@ -25,6 +27,8 @@ app.get('/', async (req, res) => {
   }
 })
 
+//Função que pega os produtos
+//Function that picks up the products
 app.get('/listagemprodutos', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
@@ -34,6 +38,8 @@ app.get('/listagemprodutos', async (req, res) => {
   }
 })
 
+//Função que verifica o nome e senha do usuario
+//Function that checks user name and password
 app.post('/', async (req, res) => {
   const usuarioEntrando = req.body.txtUsuario
   const senhaEntrando = req.body.pswSenha
@@ -51,6 +57,8 @@ app.post('/', async (req, res) => {
   }
 })
 
+//Função para alterar o produto
+//Function to change the product
 app.get('/alterar/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
 
@@ -65,6 +73,7 @@ app.get('/alterar/:codigo', async (req, res) => {
     })
   }
 })
+
 
 /* app.listen(porta) */
 http.createServer(app).listen(app.get('port'), function () {
