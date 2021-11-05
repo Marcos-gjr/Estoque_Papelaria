@@ -13,6 +13,20 @@ e colocar dentro:
 
 porta=3000
 
-# Para iniciar o programa 
+# Rodando a Aplicação 
 
-npm run nm
+```bash
+# Clone este repositório
+$ git clone https://github.com/Marcos-gjr/Estoque_Papelaria.git
+
+# Acesse a pasta do projeto no terminal/cmd 
+$ cd Estoque_Papelaria
+
+# Instale as dependências
+$ npm install
+
+# Execute a aplicação
+$ npm run nm
+
+# O servidor irá se iniciar na porta:"3000" - acesse <http://localhost:3000>
+```
