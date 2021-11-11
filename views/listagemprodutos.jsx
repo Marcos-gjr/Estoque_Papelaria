@@ -7,27 +7,32 @@ export default function ListagemProdutos(props) {
     <Layout>
       <Flex align='center' justify='center' direction='column'>
         <Heading my={6}>Listagem de Produtos</Heading>
-        <Heading mb={6}>Método: {props.method}</Heading>
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>
             <Tr>
-              <Th w={'20%'}>Codigo</Th>
-              <Th w={'20%'}>Nome</Th>
-              <Th w={'20%'}>Quantidade</Th>
-              <Th w={'20%'}>Descrição</Th>
-              <Th w={'20%'}>Alterar</Th>
+              <Th w={'16.67%'}>Codigo</Th>
+              <Th w={'16.67%'}>Nome</Th>
+              <Th w={'16.67%'}>Quantidade</Th>
+              <Th w={'16.67%'}>Descrição</Th>
+              <Th w={'16.67%'}>Alterar</Th>
+              <Th w={'16.67%'}>Excluir</Th>
             </Tr>
           </Thead>
           <Tbody w={'100%'}>
             {props.produtos.map((produto, index) => (
               <Tr key={index}>
-                <Td w={'20%'}>{produto['codigo']}</Td>
-                <Td w={'20%'}>{produto['nome']}</Td>
-                <Td w={'20%'}>{produto['quantidade']}</Td>
-                <Td w={'20%'}>{produto['descricao']}</Td>
-                <Td w={'20%'}>
+                <Td w={'16.67%'}>{produto['codigo']}</Td>
+                <Td w={'16.67%'}>{produto['nome']}</Td>
+                <Td w={'16.67%'}>{produto['quantidade']}</Td>
+                <Td w={'16.67%'}>{produto['descricao']}</Td>
+                <Td w={'16.67%'}>
                   <Link color='red' href={`/alterar/${produto['codigo']}`}>
                     Alterar
+                  </Link>
+                </Td>
+                <Td w={'16.67%'}>
+                  <Link color='red' href={`/excluir/${produto['codigo']}`}>
+                    Excluir
                   </Link>
                 </Td>
               </Tr>

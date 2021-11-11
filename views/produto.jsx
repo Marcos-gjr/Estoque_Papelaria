@@ -14,19 +14,19 @@ export default function ListagemProdutos(props) {
             <Tr>
               <Td>Título</Td>
               <Td>
-                <Input type='text' name='Nome' defaultValue={props.produto.nome} />
+                <Input type='text' name='nome' defaultValue={props.produto.nome} />
               </Td>
             </Tr>
             <Tr>
               <Td>Autor</Td>
               <Td>
-                <Input type='text' name='Quantidade' defaultValue={props.produto.quantidade} />
+                <Input type='text' name='quantidade' defaultValue={props.produto.quantidade} />
               </Td>
             </Tr>
             <Tr>
               <Td>Ano</Td>
               <Td>
-                <Input type='text' name='Descrição' defaultValue={props.produto.descricao} />
+                <Input type='text' name='descricao' defaultValue={props.produto.descricao} />
               </Td>
             </Tr>
             <Tr>

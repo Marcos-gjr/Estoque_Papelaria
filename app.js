@@ -1,7 +1,7 @@
 import express from 'express'
 import session from 'express-session'
 import { createEngine } from 'express-react-views'
-import { listarProdutos, buscarUsuario, recuperarProduto } from './banco.js'
+import { listarProdutos, buscarUsuario, recuperarProduto, atualizarProduto, excluirProduto } from './banco.js'
 import http from 'http'
 import { config } from 'dotenv'
 config()
@@ -16,33 +16,22 @@ app.set('view engine', 'jsx')
 app.set('views', './views')
 app.set('port', process.env.porta)
 
-//Função para entrada com usuario
-//User input function
+// Função para entrada com usuario
+// User input function
 app.get('/', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos, method: 'get' })
+    res.render('listagemprodutos', { produtos })
   } else {
     res.render('login')
   }
 })
 
-//Função que pega os produtos
-//Function that picks up the products
-app.get('/listagemprodutos', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos, method: 'get' })
-  } else {
-    res.render('404')
-  }
-})
-
-//Função que verifica o nome e senha do usuario
-//Function that checks user name and password
+// Função que verifica o nome e senha do usuario
+// Function that checks user name and password
 app.post('/', async (req, res) => {
-  const usuarioEntrando = req.body.txtUsuario
-  const senhaEntrando = req.body.pswSenha
+  const usuarioEntrando = req.body.usuario
+  const senhaEntrando = req.body.senha
 
   const linhas = await buscarUsuario(usuarioEntrando, senhaEntrando)
   let achou = false
@@ -51,14 +40,25 @@ app.post('/', async (req, res) => {
   if (achou) {
     req.session.usuario = usuarioEntrando
     const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos, method: 'post' })
+    res.render('listagemprodutos', { produtos })
   } else {
     res.render('login')
   }
 })
 
-//Função para alterar o produto
-//Function to change the product
+// Função que pega os produtos
+// Function that picks up the products
+app.get('/listagemprodutos', async (req, res) => {
+  if (req.session.usuario) {
+    const produtos = await listarProdutos()
+    res.render('listagemprodutos', { produtos })
+  } else {
+    res.render('404')
+  }
+})
+
+// Função para alterar o produto
+// Function to change the product
 app.get('/alterar/:codigo', async (req, res) => {
   const codigo = parseInt(req.params.codigo)
 
@@ -74,6 +74,26 @@ app.get('/alterar/:codigo', async (req, res) => {
   }
 })
 
+app.post('/alterar/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
+  const nome = req.body.nome
+  const quantidade = req.body.quantidade
+  const descricao = req.body.descricao
+
+  await atualizarProduto(nome, quantidade, descricao, codigo)
+
+  const produtos = await listarProdutos()
+  res.render('listagemprodutos', { produtos })
+})
+
+app.get('/excluir/:codigo', async (req, res) => {
+  const codigo = parseInt(req.params.codigo)
+
+  await excluirProduto(codigo)
+
+  const produtos = await listarProdutos()
+  res.render('listagemprodutos', { produtos })
+})
 
 /* app.listen(porta) */
 http.createServer(app).listen(app.get('port'), function () {
