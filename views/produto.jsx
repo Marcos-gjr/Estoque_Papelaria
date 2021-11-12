@@ -31,7 +31,7 @@ export default function ListagemProdutos(props) {
             </Tr>
             <Tr>
               <Td>
-                <Link color='red' href={'/'}>
+                <Link color='red' href={'/listagemprodutos'}>
                   Cancelar
                 </Link>
               </Td>

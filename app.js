@@ -21,7 +21,15 @@ app.set('port', process.env.porta)
 app.get('/', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos })
+    res.render('principal', { produtos })
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.get('/login', async (req, res) => {
+  if (req.session.usuario) {
+    res.redirect('/principal')
   } else {
     res.render('login')
   }
@@ -29,20 +37,19 @@ app.get('/', async (req, res) => {
 
 // Função que verifica o nome e senha do usuario
 // Function that checks user name and password
-app.post('/', async (req, res) => {
-  const usuarioEntrando = req.body.usuario
-  const senhaEntrando = req.body.senha
+app.post('/login', async (req, res) => {
+  const usuario = req.body.usuario
+  const senha = req.body.senha
 
-  const linhas = await buscarUsuario(usuarioEntrando, senhaEntrando)
+  const linhas = await buscarUsuario(usuario, senha)
   let achou = false
   if (linhas && linhas.length > 0) achou = true
 
   if (achou) {
-    req.session.usuario = usuarioEntrando
-    const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos })
+    req.session.usuario = usuario
+    res.redirect('/')
   } else {
-    res.render('login')
+    res.render('login', { error: 'Usuario e/ou senha incorretos, caso tenha esquecido contate o administrador' })
   }
 })
 
@@ -53,46 +60,83 @@ app.get('/listagemprodutos', async (req, res) => {
     const produtos = await listarProdutos()
     res.render('listagemprodutos', { produtos })
   } else {
-    res.render('404')
+    res.redirect('/login')
+  }
+})
+
+app.get('/principal', async (req, res) => {
+  if (req.session.usuario) {
+    const produtos = await listarProdutos()
+    res.render('principal', { produtos })
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.get('/logout', function (req, res) {
+  /* req.logout() */
+
+  if (req.session.usuario) {
+    req.session.usuario = null
+  }
+
+  res.redirect('/login')
+})
+
+app.get('/esqueci', async (req, res) => {
+  if (req.session.usuario) {
+    res.redirect('/principal')
+  } else {
+    res.render('esqueci')
   }
 })
 
 // Função para alterar o produto
 // Function to change the product
 app.get('/alterar/:codigo', async (req, res) => {
-  const codigo = parseInt(req.params.codigo)
+  if (req.session.usuario) {
+    const codigo = parseInt(req.params.codigo)
 
-  const produto = await recuperarProduto(codigo)
-  if (produto == {}) {
-    res.render('erro', { mensagem: 'Produto inexistente', link: '/listagemprodutos' })
+    const produto = await recuperarProduto(codigo)
+    if (produto == {}) {
+      res.render('erro', { mensagem: 'Produto inexistente', link: '/listagemprodutos' })
+    } else {
+      res.render('produto', {
+        titulo: 'Alteração de Produtos',
+        produto,
+        action: '/alterar/' + codigo
+      })
+    }
   } else {
-    res.render('produto', {
-      titulo: 'Alteração de Produtos',
-      produto,
-      action: '/alterar/' + codigo
-    })
+    res.redirect('/login')
   }
 })
 
 app.post('/alterar/:codigo', async (req, res) => {
-  const codigo = parseInt(req.params.codigo)
-  const nome = req.body.nome
-  const quantidade = req.body.quantidade
-  const descricao = req.body.descricao
+  if (req.session.usuario) {
+    const codigo = parseInt(req.params.codigo)
+    const nome = req.body.nome
+    const quantidade = req.body.quantidade
+    const descricao = req.body.descricao
 
-  await atualizarProduto(nome, quantidade, descricao, codigo)
-
-  const produtos = await listarProdutos()
-  res.render('listagemprodutos', { produtos })
+    await atualizarProduto(nome, quantidade, descricao, codigo)
+    res.redirect('/listagemprodutos')
+  } else {
+    res.redirect('/login')
+  }
 })
 
 app.get('/excluir/:codigo', async (req, res) => {
-  const codigo = parseInt(req.params.codigo)
+  if (req.session.usuario) {
+    const codigo = parseInt(req.params.codigo)
 
-  await excluirProduto(codigo)
+    await excluirProduto(codigo)
 
-  const produtos = await listarProdutos()
-  res.render('listagemprodutos', { produtos })
+    const produtos = await listarProdutos()
+    res.render('listagemprodutos', { produtos })
+  } else {
+    res.redirect('/login')
+  }
 })
 
 /* app.listen(porta) */
