@@ -17,13 +17,15 @@ export default function HelloMessage(props) {
         </Flex>
         <Flex w={'80%'} justify='space-around' my={10}>
           <Link>Clientes</Link>
-          <Link href='/listagemprodutos'>Estoque</Link>
+          <Link href='/listagemprodutos'>Produtos</Link>
+          <Link href='/produtosrecebidos'>Recebidos</Link>
+          <Link href='/produtosvendidos'>Vendidos</Link>
           <Link>Fornecedores</Link>
           <Link>Chegada</Link>
           <Link>Saída</Link>
         </Flex>
         <Flex w={'80%'} direction='column' justify='center' align='center'>
-          <Heading>{'Produtos quase em falta ( < 6 )'}</Heading>
+          <Heading>{'Produtos quase em falta ( <6 )'}</Heading>
           {produtosAcabando.length >= 1 ? (
             <Table w={'80%'} variant='simple' my={10}>
               <Thead w={'100%'}>

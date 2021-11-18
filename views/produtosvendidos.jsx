@@ -2,13 +2,13 @@ import React from 'react'
 import Layout from './layout.jsx'
 import { Flex, Heading, Table, Th, Td, Tr, Thead, Tbody, Link } from '@chakra-ui/react'
 
-export default function ListagemProdutos(props) {
+export default function ProdutosVendidos(props) {
   return (
     <Layout>
       <Flex align='center' justify='center' direction='column'>
         <Flex w={'80%'} justify='space-between' my={10}>
           <Link href='/'>Principal</Link>
-          <Heading>Listagem de Produtos</Heading>
+          <Heading>Produtos Vendidos</Heading>
           <Link href='/logout'>Logout</Link>
         </Flex>
         <Table w={'80%'} variant='simple'>

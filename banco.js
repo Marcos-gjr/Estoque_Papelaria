@@ -43,10 +43,11 @@ export async function recuperarProduto(id) {
   else return {}
 }
 
-export async function atualizarProduto(nome, quantidade, descricao, id) {
+export async function atualizarProduto(nome, /* quantidade, */ descricao, id) {
   const conexao = await conectar()
-  const sql = 'update produtos set nome=?, quantidade=?, descricao=? where codigo=?;'
-  await conexao.query(sql, [nome, quantidade, descricao, id])
+  /* quantidade=?, */
+  const sql = 'update produtos set nome=?,  descricao=? where codigo=?;'
+  await conexao.query(sql, [nome, /* quantidade, */ descricao, id])
 }
 
 export async function excluirProduto(id) {

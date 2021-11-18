@@ -64,6 +64,24 @@ app.get('/listagemprodutos', async (req, res) => {
   }
 })
 
+app.get('/produtosrecebidos', async (req, res) => {
+  if (req.session.usuario) {
+    const produtos = await listarProdutos()
+    res.render('produtosrecebidos', { produtos })
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.get('/produtosvendidos', async (req, res) => {
+  if (req.session.usuario) {
+    const produtos = await listarProdutos()
+    res.render('produtosvendidos', { produtos })
+  } else {
+    res.redirect('/login')
+  }
+})
+
 app.get('/principal', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
@@ -79,7 +97,6 @@ app.get('/logout', function (req, res) {
   if (req.session.usuario) {
     req.session.usuario = null
   }
-
   res.redirect('/login')
 })
 
@@ -102,7 +119,7 @@ app.get('/alterar/:codigo', async (req, res) => {
       res.render('erro', { mensagem: 'Produto inexistente', link: '/listagemprodutos' })
     } else {
       res.render('produto', {
-        titulo: 'Alteração de Produtos',
+        title: 'Alteração do Produto',
         produto,
         action: '/alterar/' + codigo
       })
@@ -116,10 +133,10 @@ app.post('/alterar/:codigo', async (req, res) => {
   if (req.session.usuario) {
     const codigo = parseInt(req.params.codigo)
     const nome = req.body.nome
-    const quantidade = req.body.quantidade
+    /* const quantidade = req.body.quantidade */
     const descricao = req.body.descricao
 
-    await atualizarProduto(nome, quantidade, descricao, codigo)
+    await atualizarProduto(nome, /* quantidade, */ descricao, codigo)
     res.redirect('/listagemprodutos')
   } else {
     res.redirect('/login')

@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from './layout.jsx'
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading, Text, Link } from '@chakra-ui/react'
 
 export default function HelloMessage() {
   return (
@@ -9,7 +9,7 @@ export default function HelloMessage() {
         <Heading>404</Heading>
         <Text>Página não encontrada ou sem permissão para visualizar</Text>
         <Text>
-          Clique <a href='http://localhost:3000'>aqui</a> para entrar no sistema.
+          Clique <Link href='/'>aqui</Link> para entrar no sistema.
         </Text>
       </Flex>
     </Layout>
