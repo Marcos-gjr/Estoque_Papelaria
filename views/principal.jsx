@@ -20,7 +20,7 @@ export default function HelloMessage(props) {
           <Link href='/listagemprodutos'>Produtos</Link>
           <Link href='/produtosrecebidos'>Recebidos</Link>
           <Link href='/produtosvendidos'>Vendidos</Link>
-          <Link>Fornecedores</Link>
+          <Link href='/fornecedores'>Fornecedores</Link>
           <Link>Chegada</Link>
           <Link>Saída</Link>
         </Flex>

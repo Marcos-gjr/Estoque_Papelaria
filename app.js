@@ -73,6 +73,14 @@ app.get('/produtosrecebidos', async (req, res) => {
   }
 })
 
+app.get('/fornecedores', async (req, res) => {
+  if ( req.session.usuario ) {
+    res.render('fornecedores')
+  } else {
+    res.redirect('/login')
+  }
+})
+
 app.get('/produtosvendidos', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
