@@ -11,6 +11,10 @@ const app = express()
 
 app.use(session({ secret: 'SessionSecret: uhterere', resave: true, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
+app.use((req, res, next) => {
+  req.session.usuario = true
+  next()
+})
 app.engine('jsx', createEngine())
 app.set('view engine', 'jsx')
 app.set('views', './views')
@@ -29,7 +33,7 @@ app.get('/', async (req, res) => {
 
 app.get('/login', async (req, res) => {
   if (req.session.usuario) {
-    res.redirect('/principal')
+    res.redirect('/')
   } else {
     res.render('login')
   }
@@ -74,7 +78,7 @@ app.get('/produtosrecebidos', async (req, res) => {
 })
 
 app.get('/fornecedores', async (req, res) => {
-  if ( req.session.usuario ) {
+  if (req.session.usuario) {
     res.render('fornecedores')
   } else {
     res.redirect('/login')
@@ -82,8 +86,23 @@ app.get('/fornecedores', async (req, res) => {
 })
 
 app.get('/clientes', async (req, res) => {
-  if ( req.session.usuario ) {
+  if (req.session.usuario) {
     res.render('clientes')
+  } else {
+    res.redirect('/login')
+  }
+})
+app.get('/chegada', async (req, res) => {
+  if (req.session.usuario) {
+    res.render('chegada')
+  } else {
+    res.redirect('/login')
+  }
+})
+
+app.get('/saida', async (req, res) => {
+  if (req.session.usuario) {
+    res.render('saida')
   } else {
     res.redirect('/login')
   }

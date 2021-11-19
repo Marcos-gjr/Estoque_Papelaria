@@ -21,8 +21,8 @@ export default function HelloMessage(props) {
           <Link href='/produtosrecebidos'>Recebidos</Link>
           <Link href='/produtosvendidos'>Vendidos</Link>
           <Link href='/fornecedores'>Fornecedores</Link>
-          <Link>Chegada</Link>
-          <Link>Saída</Link>
+          <Link href='/chegada'>Chegada</Link>
+          <Link href='/saida'>Saída</Link>
         </Flex>
         <Flex w={'80%'} direction='column' justify='center' align='center'>
           <Heading>{'Produtos quase em falta ( <6 )'}</Heading>
