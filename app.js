@@ -81,19 +81,18 @@ app.get('/fornecedores', async (req, res) => {
   }
 })
 
-app.get('/produtosvendidos', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('produtosvendidos', { produtos })
+app.get('/clientes', async (req, res) => {
+  if ( req.session.usuario ) {
+    res.render('clientes')
   } else {
     res.redirect('/login')
   }
 })
 
-app.get('/principal', async (req, res) => {
+app.get('/produtosvendidos', async (req, res) => {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
-    res.render('principal', { produtos })
+    res.render('produtosvendidos', { produtos })
   } else {
     res.redirect('/login')
   }
