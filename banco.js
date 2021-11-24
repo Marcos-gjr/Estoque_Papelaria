@@ -18,7 +18,7 @@ async function conectar() {
 // Function to find username and password
 export async function buscarUsuario(usuario, senha) {
   const conexao = await conectar()
-  const sql = 'select * from usuario where nome=? and senha=?;'
+  const sql = 'select * from usuarios where nome=? and senha=?;'
   const [linhas] = await conexao.query(sql, [usuario, senha])
   return linhas
 }
@@ -36,10 +36,19 @@ export async function listarProdutos() {
 // Function to search for the product and its information
 export async function recuperarProduto(id) {
   const conexao = await conectar()
-  const sql = 'select * from produtos where codigo=?;'
-  const [produto] = await conexao.query(sql, [id])
+  const sql = 'select * from clientes where codigo=?;'
+  const [produtos] = await conexao.query(sql, [id])
 
-  if (produto && produto.length > 0) return produto[0]
+  if (produtos && produtos.length > 0) return produtos[0]
+  else return {}
+}
+
+export async function recuperarCliente(id) {
+  const conexao = await conectar()
+  const sql = 'select * from clientes where cli_id=?;'
+  const [clientes] = await conexao.query(sql, [id])
+
+  if (clientes && clientes.length > 0) return clientes[0]
   else return {}
 }
 
@@ -50,10 +59,25 @@ export async function atualizarProduto(nome, /* quantidade, */ descricao, id) {
   await conexao.query(sql, [nome, /* quantidade, */ descricao, id])
 }
 
+export async function atualizarCliente(nome, telefone, cep, numero, codigo) {
+  const conexao = await conectar()
+  const sql = 'update produtos set cli_nome=?,  cli_tel=?, cli_cep=? , cli_num=?, where cli_id=?;'
+  await conexao.query(sql, [nome, telefone, cep, numero, codigo])
+}
+
 export async function excluirProduto(id) {
   const conexao = await conectar()
   const sql = 'delete from produtos where codigo=?;'
   await conexao.query(sql, [id])
+}
+
+// Função para listagem de Clientes
+// Cli listing function
+export async function listarClientes() {
+  const conexao = await conectar()
+  const sql = 'select * from clientes;'
+  const [clientes] = await conexao.query(sql)
+  return clientes
 }
 
 // (ini) função para incerir um novo produto

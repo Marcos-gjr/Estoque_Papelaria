@@ -14,6 +14,11 @@ e colocar dentro:
 
 porta=3000
 
+# Login
+
+Usuário: admin
+Senha: admin
+
 # Rodando a Aplicação
 
 ```bash

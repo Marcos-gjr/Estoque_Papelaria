@@ -30,20 +30,20 @@ export default function ListagemProdutos(props) {
             {props.produtos.map((produto, index) => (
               <Tr key={index}>
                 <Td w={'5%'} isNumeric>
-                  {produto['codigo']}
+                  {produto['prod_id']}
                 </Td>
-                <Td w={'20%'}>{produto['nome']}</Td>
+                <Td w={'20%'}>{produto['prod_nome']}</Td>
                 <Td w={'10%'} isNumeric>
-                  {produto['quantidade']}
+                  {produto['prod_quant']}
                 </Td>
-                <Td w={'45%'}>{produto['descricao']}</Td>
+                <Td w={'45%'}>{produto['prod_desc']}</Td>
                 <Td w={'10%'}>
-                  <Link color='red' href={`/alterar/${produto['codigo']}`}>
+                  <Link color='red' href={`/alterar/${produto['prod_id']}`}>
                     Alterar
                   </Link>
                 </Td>
                 {/* <Td w={'10%'}>
-                  <Link color='red' href={`/excluir/${produto['codigo']}`}>
+                  <Link color='red' href={`/excluir/${produto['prod_id']}`}>
                     Excluir
                   </Link>
                 </Td> */}

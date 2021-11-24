@@ -1,9 +1,25 @@
 import express from 'express'
 import session from 'express-session'
 import { createEngine } from 'express-react-views'
-import { listarProdutos, buscarUsuario, recuperarProduto, atualizarProduto, excluirProduto } from './banco.js'
-import http from 'http'
+/* import http from 'http' */
 import { config } from 'dotenv'
+import {
+  getAlterarProduto,
+  getChegada,
+  getClientes,
+  getEsqueci,
+  getExcluirCodigo,
+  getFornecedores,
+  getListagemProdutos,
+  getLogin,
+  getLogout,
+  getPrincipal,
+  getProdutosRecebidos,
+  getProdutosVendidos,
+  getSaida,
+  getAlterarCliente
+} from './getMiddlewares.js'
+import { postAlterarProduto, postLogin } from './postMiddlewares.js'
 config()
 // TO DO remover body-parser
 
@@ -11,6 +27,7 @@ const app = express()
 
 app.use(session({ secret: 'SessionSecret: uhterere', resave: true, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
+// Debug
 app.use((req, res, next) => {
   req.session.usuario = true
   next()
@@ -22,167 +39,47 @@ app.set('port', process.env.porta)
 
 // Função para entrada com usuario
 // User input function
-app.get('/', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('principal', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/', getPrincipal)
 
-app.get('/login', async (req, res) => {
-  if (req.session.usuario) {
-    res.redirect('/')
-  } else {
-    res.render('login')
-  }
-})
+app.get('/login', getLogin)
 
 // Função que verifica o nome e senha do usuario
 // Function that checks user name and password
-app.post('/login', async (req, res) => {
-  const usuario = req.body.usuario
-  const senha = req.body.senha
-
-  const linhas = await buscarUsuario(usuario, senha)
-  let achou = false
-  if (linhas && linhas.length > 0) achou = true
-
-  if (achou) {
-    req.session.usuario = usuario
-    res.redirect('/')
-  } else {
-    res.render('login', { error: 'Usuario e/ou senha incorretos, caso tenha esquecido contate o administrador' })
-  }
-})
+app.post('/login', postLogin)
 
 // Função que pega os produtos
 // Function that picks up the products
-app.get('/listagemprodutos', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/listagemprodutos', getListagemProdutos)
 
-app.get('/produtosrecebidos', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('produtosrecebidos', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/produtosrecebidos', getProdutosRecebidos)
 
-app.get('/fornecedores', async (req, res) => {
-  if (req.session.usuario) {
-    res.render('fornecedores')
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/fornecedores', getFornecedores)
 
-app.get('/clientes', async (req, res) => {
-  if (req.session.usuario) {
-    res.render('clientes')
-  } else {
-    res.redirect('/login')
-  }
-})
-app.get('/chegada', async (req, res) => {
-  if (req.session.usuario) {
-    res.render('chegada')
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/listagemclientes', getClientes)
 
-app.get('/saida', async (req, res) => {
-  if (req.session.usuario) {
-    res.render('saida')
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/chegada', getChegada)
 
-app.get('/produtosvendidos', async (req, res) => {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('produtosvendidos', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/saida', getSaida)
 
-app.get('/logout', function (req, res) {
-  /* req.logout() */
+app.get('/produtosvendidos', getProdutosVendidos)
 
-  if (req.session.usuario) {
-    req.session.usuario = null
-  }
-  res.redirect('/login')
-})
+app.get('/logout', getLogout)
 
-app.get('/esqueci', async (req, res) => {
-  if (req.session.usuario) {
-    res.redirect('/principal')
-  } else {
-    res.render('esqueci')
-  }
-})
+app.get('/esqueci', getEsqueci)
 
 // Função para alterar o produto
 // Function to change the product
-app.get('/alterar/:codigo', async (req, res) => {
-  if (req.session.usuario) {
-    const codigo = parseInt(req.params.codigo)
+app.get('/alterarcliente/:codigo', getAlterarCliente)
 
-    const produto = await recuperarProduto(codigo)
-    if (produto == {}) {
-      res.render('erro', { mensagem: 'Produto inexistente', link: '/listagemprodutos' })
-    } else {
-      res.render('produto', {
-        title: 'Alteração do Produto',
-        produto,
-        action: '/alterar/' + codigo
-      })
-    }
-  } else {
-    res.redirect('/login')
-  }
-})
+app.post('/alterarcliente/:codigo', postAlterarProduto)
 
-app.post('/alterar/:codigo', async (req, res) => {
-  if (req.session.usuario) {
-    const codigo = parseInt(req.params.codigo)
-    const nome = req.body.nome
-    /* const quantidade = req.body.quantidade */
-    const descricao = req.body.descricao
+app.get('/alterarproduto/:codigo', getAlterarProduto)
 
-    await atualizarProduto(nome, /* quantidade, */ descricao, codigo)
-    res.redirect('/listagemprodutos')
-  } else {
-    res.redirect('/login')
-  }
-})
+app.post('/alterarproduto/:codigo', postAlterarProduto)
 
-app.get('/excluir/:codigo', async (req, res) => {
-  if (req.session.usuario) {
-    const codigo = parseInt(req.params.codigo)
-
-    await excluirProduto(codigo)
-
-    const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-})
+app.get('/excluirproduto/:codigo', getExcluirCodigo)
 
 /* app.listen(porta) */
-http.createServer(app).listen(app.get('port'), function () {
+/* http.createServer(app) */ app.listen(app.get('port'), () => {
   console.log('Express server listening on port http://localhost:' + app.get('port') + '/')
 })
