@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from './layout.jsx'
-import { Flex, Heading, Table, Th, Tr, Td, Thead, Button, Tbody, Link } from '@chakra-ui/react'
+import { Flex, Heading, Table, Th, Tr, Td, Thead, Tbody, Link, Button } from '@chakra-ui/react'
 
 export default function clientes(props) {
   return (
@@ -11,9 +11,9 @@ export default function clientes(props) {
           <Heading>Listagem de clientes</Heading>
           <Link href='/logout'>Logout</Link>
         </Flex>
-        {/*<Link href='/alterarcliente'>
-          <Button>Incerir Cliente</Button>
-        </Link>*/}
+        <Link href='/criarcliente'>
+          <Button>Inserir Cliente</Button>
+        </Link>
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>
             <Tr>
@@ -27,7 +27,7 @@ export default function clientes(props) {
               <Th w={'5%'}>CEP</Th>
               <Th w={'5%'}>Numero</Th>
               <Th w={'10%'}>Alterar</Th>
-              <Th w={'10%'}>Excluir</Th>
+              {/* <Th w={'10%'}>Excluir</Th> */}
             </Tr>
           </Thead>
           <Tbody w={'100%'}>
@@ -48,11 +48,11 @@ export default function clientes(props) {
                       Alterar
                     </Link>
                   </Td>
-                  <Td w={'10%'}>
+                  {/* <Td w={'10%'}>
                     <Link color='red' href={`/excluircliente/${clientes['cli_id']}`}>
                       Excluir
                     </Link>
-                  </Td>
+                  </Td> */}
                 </Tr>
               ))}
             </Tbody>

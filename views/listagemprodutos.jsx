@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from './layout.jsx'
-import { Flex, Heading, Table, Th, Td, Tr, Thead, Tbody, Link } from '@chakra-ui/react'
+import { Flex, Heading, Table, Th, Td, Tr, Thead, Tbody, Link, Button } from '@chakra-ui/react'
 
 export default function ListagemProdutos(props) {
   return (
@@ -11,6 +11,9 @@ export default function ListagemProdutos(props) {
           <Heading>Listagem de Produtos</Heading>
           <Link href='/logout'>Logout</Link>
         </Flex>
+        <Link href='/criarproduto'>
+          <Button>Criar Produto</Button>
+        </Link>
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>
             <Tr>
@@ -38,12 +41,12 @@ export default function ListagemProdutos(props) {
                 </Td>
                 <Td w={'45%'}>{produto['prod_desc']}</Td>
                 <Td w={'10%'}>
-                  <Link color='red' href={`/alterar/${produto['prod_id']}`}>
+                  <Link color='red' href={`/alterarproduto/${produto['prod_id']}`}>
                     Alterar
                   </Link>
                 </Td>
                 {/* <Td w={'10%'}>
-                  <Link color='red' href={`/excluir/${produto['prod_id']}`}>
+                  <Link color='red' href={`/excluirproduto/${produto['prod_id']}`}>
                     Excluir
                   </Link>
                 </Td> */}

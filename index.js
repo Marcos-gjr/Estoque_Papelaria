@@ -17,9 +17,11 @@ import {
   getProdutosRecebidos,
   getProdutosVendidos,
   getSaida,
-  getAlterarCliente
+  getAlterarCliente,
+  getCriarProduto,
+  getCriarCliente
 } from './getMiddlewares.js'
-import { postAlterarProduto, postLogin } from './postMiddlewares.js'
+import { postAlterarProduto, postLogin, postAlterarCliente, postCriarProduto, postCriarCliente } from './postMiddlewares.js'
 config()
 // TO DO remover body-parser
 
@@ -71,9 +73,17 @@ app.get('/esqueci', getEsqueci)
 // Function to change the product
 app.get('/alterarcliente/:codigo', getAlterarCliente)
 
-app.post('/alterarcliente/:codigo', postAlterarProduto)
+app.post('/alterarcliente/:codigo', postAlterarCliente)
 
 app.get('/alterarproduto/:codigo', getAlterarProduto)
+
+app.get('/criarproduto', getCriarProduto)
+
+app.get('/criarcliente', getCriarCliente)
+
+app.post('/criarproduto', postCriarProduto)
+
+app.post('/criarcliente', postCriarCliente)
 
 app.post('/alterarproduto/:codigo', postAlterarProduto)
 

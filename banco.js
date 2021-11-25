@@ -36,7 +36,7 @@ export async function listarProdutos() {
 // Function to search for the product and its information
 export async function recuperarProduto(id) {
   const conexao = await conectar()
-  const sql = 'select * from clientes where codigo=?;'
+  const sql = 'select * from produtos where prod_id=?;'
   const [produtos] = await conexao.query(sql, [id])
 
   if (produtos && produtos.length > 0) return produtos[0]
@@ -55,13 +55,13 @@ export async function recuperarCliente(id) {
 export async function atualizarProduto(nome, /* quantidade, */ descricao, id) {
   const conexao = await conectar()
   /* quantidade=?, */
-  const sql = 'update produtos set nome=?,  descricao=? where codigo=?;'
+  const sql = 'update produtos set prod_nome=?, prod_desc=? where prod_id=?;'
   await conexao.query(sql, [nome, /* quantidade, */ descricao, id])
 }
 
 export async function atualizarCliente(nome, telefone, cep, numero, codigo) {
   const conexao = await conectar()
-  const sql = 'update produtos set cli_nome=?,  cli_tel=?, cli_cep=? , cli_num=?, where cli_id=?;'
+  const sql = 'update clientes set cli_nome=?,  cli_tel=?, cli_cep=? , cli_num=? where cli_id=?;'
   await conexao.query(sql, [nome, telefone, cep, numero, codigo])
 }
 
@@ -80,12 +80,17 @@ export async function listarClientes() {
   return clientes
 }
 
-// (ini) função para incerir um novo produto
+// (ini) função para inserir um novo produto
 // function to start a new product
-/*async function inserirProduto(produto)
-{
-    const conexao = await conectar()
-    const sql = 'insert into livros (nome, quantidade, descricao) values (?,?,?);'
-    return await conexao.query(sql, [produto.nome, produto.qtd, produto.des])
+export async function criarProduto(prod_nome, prod_desc) {
+  const conexao = await conectar()
+  const sql = 'insert into produtos (prod_nome, prod_quant, prod_desc) values (?,?,?);'
+  return await conexao.query(sql, [prod_nome, 0, prod_desc])
 }
-*/
+
+//função para inserir um novo cliente
+export async function criarCliente(cli_nome, cli_tel, cli_cep, cli_num) {
+  const conexao = await conectar()
+  const sql = 'insert into clientes (cli_nome, cli_tel, cli_cep , cli_num) values (?,?,?,?);'
+  return await conexao.query(sql, [cli_nome, cli_tel, cli_cep, cli_num])
+}

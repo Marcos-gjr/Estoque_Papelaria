@@ -11,23 +11,23 @@ export default function AlterarCliente(props) {
         <form action={`${props.action}`} method='POST'>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Nome</FormLabel>
-            <Input name='cli_nome' defaultValue={props.cliente.cli_nome} />
+            <Input name='cli_nome' defaultValue={props.cliente ? props.cliente.cli_nome : null} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Telefone</FormLabel>
-            <Input name='cli_tel' defaultValue={props.cliente.cli_tel} />
+            <Input name='cli_tel' defaultValue={props.cliente ? props.cliente.cli_tel : null} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>CEP</FormLabel>
-            <Textarea name='cli_cep' defaultValue={props.cliente.cli_cep} />
+            <Textarea name='cli_cep' defaultValue={props.cliente ? props.cliente.cli_cep : null} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Numero</FormLabel>
-            <Textarea name='cli_num' defaultValue={props.cliente.cli_num} />
+            <Textarea name='cli_num' defaultValue={props.cliente ? props.cliente.cli_num : null} />
           </FormControl>
-          <Input mb={6} type='submit' value='Salvar' w={'18rem'} />
-          <Flex>
-            <Link color='red' href={'/listagemclientes'} textAlign='center' w={'18rem'}>
+          <Flex justify='center' align='center' direction='column'>
+            <Input mb={6} type='submit' value='Salvar' w={'14rem'} />
+            <Link color='red' href={props.cancelar} textAlign='center' w={'4rem'}>
               Cancelar
             </Link>
           </Flex>

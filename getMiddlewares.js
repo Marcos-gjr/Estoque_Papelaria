@@ -1,4 +1,4 @@
-import { excluirProduto, listarProdutos, recuperarProduto, listarClientes, recuperarCliente } from './banco.js'
+import { excluirProduto, listarProdutos, recuperarProduto, listarClientes, recuperarCliente, criarCliente } from './banco.js'
 
 export async function getPrincipal(req, res) {
   if (req.session.usuario) {
@@ -103,9 +103,34 @@ export async function getAlterarProduto(req, res) {
       res.render('alterarproduto', {
         title: 'Alteração do Produto',
         produto,
-        action: '/alterar/' + codigo
+        cancelar: '/listagemprodutos',
+        action: '/alterarproduto/' + codigo
       })
     }
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function getCriarProduto(req, res) {
+  if (req.session.usuario) {
+    res.render('alterarproduto', {
+      title: 'Criação de Produto',
+      cancelar: '/listagemprodutos',
+      action: '/criarproduto'
+    })
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function getCriarCliente(req, res) {
+  if (req.session.usuario) {
+    res.render('alterarcliente', {
+      title: 'Criação de Cliente',
+      cancelar: '/listagemclientes',
+      action: '/criarcliente'
+    })
   } else {
     res.redirect('/login')
   }

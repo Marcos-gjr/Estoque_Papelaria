@@ -5,7 +5,7 @@ import { Flex, Link, Heading, Table, Thead, Tr, Th, Tbody, Td, Text } from '@cha
 export default function HelloMessage(props) {
   let produtosAcabando = []
   if (props.produtos) {
-    produtosAcabando = props.produtos.filter(produto => produto['quantidade'] <= 5)
+    produtosAcabando = props.produtos.filter(produto => produto['prod_quant'] <= 5)
   }
 
   return (
@@ -39,10 +39,10 @@ export default function HelloMessage(props) {
               <Tbody w={'100%'}>
                 {produtosAcabando.map((produto, index) => (
                   <Tr key={index}>
-                    <Td w={'25%'}>{produto['codigo']}</Td>
-                    <Td w={'25%'}>{produto['nome']}</Td>
-                    <Td w={'25%'}>{produto['quantidade']}</Td>
-                    <Td w={'25%'}>{produto['descricao']}</Td>
+                    <Td w={'25%'}>{produto['prod_id']}</Td>
+                    <Td w={'25%'}>{produto['prod_nome']}</Td>
+                    <Td w={'25%'}>{produto['prod_quant']}</Td>
+                    <Td w={'25%'}>{produto['prod_desc']}</Td>
                   </Tr>
                 ))}
               </Tbody>
