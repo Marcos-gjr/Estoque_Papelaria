@@ -11,15 +11,15 @@ export default function AlterarProdutos(props) {
         <form action={`${props.action}`} method='POST'>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Nome</FormLabel>
-            <Input name='nome' defaultValue={props.produto ? props.produto.prod_nome : null} />
+            <Input name='nome' defaultValue={props.produto ? props.produto.prod_nome : ''} />
           </FormControl>
           <FormControl mb={6} w={'18rem'} isReadOnly>
             <FormLabel>Quantidade</FormLabel>
-            <Input /* name='quantidade' */ defaultValue={props.produto ? props.produto.prod_quant : null} border={0} />
+            <Input defaultValue={props.produto ? props.produto.prod_quant : 0} border={0} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Descrição</FormLabel>
-            <Textarea name='descricao' defaultValue={props.produto ? props.produto.prod_desc : null} />
+            <Textarea name='descricao' defaultValue={props.produto ? props.produto.prod_desc : ''} />
           </FormControl>
           <Flex justify='center' align='center' direction='column'>
             <Input mb={6} type='submit' value='Salvar' w={'14rem'} />

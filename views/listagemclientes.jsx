@@ -31,31 +31,29 @@ export default function clientes(props) {
             </Tr>
           </Thead>
           <Tbody w={'100%'}>
-            <Tbody w={'100%'}>
-              {props.clientes.map((clientes, index) => (
-                <Tr key={index}>
-                  <Td w={'5%'} isNumeric>
-                    {clientes['cli_id']}
-                  </Td>
-                  <Td w={'20%'}>{clientes['cli_nome']}</Td>
-                  <Td w={'10%'} isNumeric>
-                    {clientes['cli_tel']}
-                  </Td>
-                  <Td w={'45%'}>{clientes['cli_cep']}</Td>
-                  <Td w={'45%'}>{clientes['cli_num']}</Td>
-                  <Td w={'10%'}>
-                    <Link color='red' href={`/alterarcliente/${clientes['cli_id']}`}>
-                      Alterar
-                    </Link>
-                  </Td>
-                  {/* <Td w={'10%'}>
+            {props.clientes.map((clientes, index) => (
+              <Tr key={index}>
+                <Td w={'5%'} isNumeric>
+                  {clientes['cli_id']}
+                </Td>
+                <Td w={'20%'}>{clientes['cli_nome']}</Td>
+                <Td w={'10%'} isNumeric>
+                  {clientes['cli_tel']}
+                </Td>
+                <Td w={'45%'}>{clientes['cli_cep']}</Td>
+                <Td w={'45%'}>{clientes['cli_num']}</Td>
+                <Td w={'10%'}>
+                  <Link color='red' href={`/alterarcliente/${clientes['cli_id']}`}>
+                    Alterar
+                  </Link>
+                </Td>
+                {/* <Td w={'10%'}>
                     <Link color='red' href={`/excluircliente/${clientes['cli_id']}`}>
                       Excluir
                     </Link>
                   </Td> */}
-                </Tr>
-              ))}
-            </Tbody>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </Flex>

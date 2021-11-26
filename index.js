@@ -8,7 +8,6 @@ import {
   getChegada,
   getClientes,
   getEsqueci,
-  getExcluirCodigo,
   getFornecedores,
   getListagemProdutos,
   getLogin,
@@ -19,9 +18,19 @@ import {
   getSaida,
   getAlterarCliente,
   getCriarProduto,
-  getCriarCliente
+  getCriarCliente,
+  getAlterarFornecedor,
+  getCriarFornecedor
 } from './getMiddlewares.js'
-import { postAlterarProduto, postLogin, postAlterarCliente, postCriarProduto, postCriarCliente } from './postMiddlewares.js'
+import {
+  postAlterarProduto,
+  postLogin,
+  postAlterarCliente,
+  postCriarProduto,
+  postCriarCliente,
+  postCriarFornecedor,
+  postAlterarFornecedor
+} from './postMiddlewares.js'
 config()
 // TO DO remover body-parser
 
@@ -55,7 +64,7 @@ app.get('/listagemprodutos', getListagemProdutos)
 
 app.get('/produtosrecebidos', getProdutosRecebidos)
 
-app.get('/fornecedores', getFornecedores)
+app.get('/listagemfornecedores', getFornecedores)
 
 app.get('/listagemclientes', getClientes)
 
@@ -69,25 +78,32 @@ app.get('/logout', getLogout)
 
 app.get('/esqueci', getEsqueci)
 
-// Função para alterar o produto
-// Function to change the product
+// Cliente
 app.get('/alterarcliente/:codigo', getAlterarCliente)
 
 app.post('/alterarcliente/:codigo', postAlterarCliente)
 
+app.get('/criarcliente', getCriarCliente)
+
+app.post('/criarcliente', postCriarCliente)
+
+// Produto
 app.get('/alterarproduto/:codigo', getAlterarProduto)
 
 app.get('/criarproduto', getCriarProduto)
 
-app.get('/criarcliente', getCriarCliente)
-
 app.post('/criarproduto', postCriarProduto)
-
-app.post('/criarcliente', postCriarCliente)
 
 app.post('/alterarproduto/:codigo', postAlterarProduto)
 
-app.get('/excluirproduto/:codigo', getExcluirCodigo)
+// Fornecedor
+app.get('/alterarfornecedor/:codigo', getAlterarFornecedor)
+
+app.get('/criarfornecedor', getCriarFornecedor)
+
+app.post('/criarfornecedor', postCriarFornecedor)
+
+app.post('/alterarfornecedor/:codigo', postAlterarFornecedor)
 
 /* app.listen(porta) */
 /* http.createServer(app) */ app.listen(app.get('port'), () => {

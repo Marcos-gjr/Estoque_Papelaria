@@ -18,9 +18,9 @@ export default function HelloMessage(props) {
         <Flex w={'80%'} justify='space-around' my={10}>
           <Link href='/listagemclientes'>Clientes</Link>
           <Link href='/listagemprodutos'>Produtos</Link>
+          <Link href='/listagemfornecedores'>Fornecedores</Link>
           <Link href='/produtosrecebidos'>Recebidos</Link>
           <Link href='/produtosvendidos'>Vendidos</Link>
-          <Link href='/fornecedores'>Fornecedores</Link>
           <Link href='/chegada'>Chegada</Link>
           <Link href='/saida'>Saída</Link>
         </Flex>

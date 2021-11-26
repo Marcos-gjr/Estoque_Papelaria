@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from './layout.jsx'
 import { Input, Heading, Link, FormControl, FormLabel, Flex, Textarea } from '@chakra-ui/react'
 
-export default function AlterarCliente(props) {
+export default function AlterarFornecedor(props) {
   return (
     <Layout>
       <Flex align='center' justify='center' direction='column' h={700}>
@@ -11,19 +11,23 @@ export default function AlterarCliente(props) {
         <form action={`${props.action}`} method='POST'>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Nome</FormLabel>
-            <Input name='cli_nome' defaultValue={props.cliente ? props.cliente.cli_nome : ''} />
+            <Input name='for_nome' defaultValue={props.fornecedor ? props.fornecedor.for_nome : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Telefone</FormLabel>
-            <Input name='cli_tel' defaultValue={props.cliente ? props.cliente.cli_tel : ''} />
+            <Input name='for_tel' defaultValue={props.fornecedor ? props.fornecedor.for_tel : ''} />
+          </FormControl>
+          <FormControl isRequired mb={6} w={'18rem'}>
+            <FormLabel>Descrição</FormLabel>
+            <Textarea name='for_desc' defaultValue={props.fornecedor ? props.fornecedor.for_desc : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>CEP</FormLabel>
-            <Textarea name='cli_cep' defaultValue={props.cliente ? props.cliente.cli_cep : ''} />
+            <Input name='for_cep' defaultValue={props.fornecedor ? props.fornecedor.for_cep : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Numero</FormLabel>
-            <Textarea name='cli_num' defaultValue={props.cliente ? props.cliente.cli_num : ''} />
+            <Input name='for_num' defaultValue={props.fornecedor ? props.fornecedor.for_num : ''} />
           </FormControl>
           <Flex justify='center' align='center' direction='column'>
             <Input mb={6} type='submit' value='Salvar' w={'14rem'} />

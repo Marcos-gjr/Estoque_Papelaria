@@ -1,4 +1,4 @@
-import { excluirProduto, listarProdutos, recuperarProduto, listarClientes, recuperarCliente, criarCliente } from './banco.js'
+import { listarProdutos, recuperarProduto, listarClientes, recuperarCliente, recuperarFornecedor, listarFornecedores } from './banco.js'
 
 export async function getPrincipal(req, res) {
   if (req.session.usuario) {
@@ -35,9 +35,10 @@ export async function getProdutosRecebidos(req, res) {
   }
 }
 
-export function getFornecedores(req, res) {
+export async function getFornecedores(req, res) {
   if (req.session.usuario) {
-    res.render('fornecedores')
+    const fornecedores = await listarFornecedores()
+    res.render('listagemfornecedores', { fornecedores })
   } else {
     res.redirect('/login')
   }
@@ -92,6 +93,7 @@ export function getEsqueci(req, res) {
   }
 }
 
+// Produto
 export async function getAlterarProduto(req, res) {
   if (req.session.usuario) {
     const codigo = parseInt(req.params.codigo)
@@ -124,6 +126,7 @@ export async function getCriarProduto(req, res) {
   }
 }
 
+// Cliente
 export async function getCriarCliente(req, res) {
   if (req.session.usuario) {
     res.render('alterarcliente', {
@@ -155,14 +158,34 @@ export async function getAlterarCliente(req, res) {
   }
 }
 
-export async function getExcluirCodigo(req, res) {
+// Fornecedor
+export async function getCriarFornecedor(req, res) {
+  if (req.session.usuario) {
+    res.render('alterarfornecedor', {
+      title: 'Criação de Fornecedor',
+      cancelar: '/listagemfornecedores',
+      action: '/criarfornecedor'
+    })
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function getAlterarFornecedor(req, res) {
   if (req.session.usuario) {
     const codigo = parseInt(req.params.codigo)
 
-    await excluirProduto(codigo)
-
-    const produtos = await listarProdutos()
-    res.render('listagemprodutos', { produtos })
+    const fornecedor = await recuperarFornecedor(codigo)
+    if (fornecedor == {}) {
+      res.render('erro', { mensagem: 'Fornecedor inexistente', link: '/listagemfornecedores' })
+    } else {
+      res.render('alterarfornecedor', {
+        title: 'Alteração do Fornecedor',
+        fornecedor,
+        cancelar: '/listagemfornecedores',
+        action: '/alterarfornecedor/' + codigo
+      })
+    }
   } else {
     res.redirect('/login')
   }
