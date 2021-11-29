@@ -8,7 +8,6 @@ async function conectar() {
     return global.minhaConexao
   } */
 
-  // mysql://usuario:senha@servidor:porta/nomeBanco
   const conexao = await mysql.createConnection('mysql://root:@localhost:3306/damamajo')
   global.minhaConexao = conexao
   return conexao
@@ -21,7 +20,10 @@ async function conectar() {
 export async function buscarUsuario(usuario, senha) {
   const conexao = await conectar()
   const sql = 'select * from usuarios where nome=? and senha=?;'
-  const [linhas] = await conexao.query(sql, [usuario, senha])
+  const [linhas] = await conexao.query(sql, [usuario, senha], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
   return linhas
 }
 
@@ -41,23 +43,31 @@ export async function listarProdutos() {
 export async function recuperarProduto(id) {
   const conexao = await conectar()
   const sql = 'select * from produtos where prod_id=?;'
-  const [produtos] = await conexao.query(sql, [id])
+  const [produtos] = await conexao.query(sql, [id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 
   if (produtos && produtos.length > 0) return produtos[0]
   else return {}
 }
 
-export async function atualizarProduto(nome, /* quantidade, */ descricao, id) {
+export async function atualizarProduto(nome, descricao, id) {
   const conexao = await conectar()
-  /* quantidade=?, */
   const sql = 'update produtos set prod_nome=?, prod_desc=? where prod_id=?;'
-  await conexao.query(sql, [nome, /* quantidade, */ descricao, id])
+  await conexao.query(sql, [nome, descricao, id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 export async function excluirProduto(id) {
   const conexao = await conectar()
   const sql = 'delete from produtos where codigo=?;'
-  await conexao.query(sql, [id])
+  await conexao.query(sql, [id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 // (ini) função para inserir um novo produto
@@ -65,7 +75,10 @@ export async function excluirProduto(id) {
 export async function criarProduto(prod_nome, prod_desc) {
   const conexao = await conectar()
   const sql = 'insert into produtos (prod_nome, prod_quant, prod_desc) values (?,?,?);'
-  return await conexao.query(sql, [prod_nome, 0, prod_desc])
+  return await conexao.query(sql, [prod_nome, 0, prod_desc], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 //Cliente
@@ -73,7 +86,10 @@ export async function criarProduto(prod_nome, prod_desc) {
 export async function recuperarCliente(id) {
   const conexao = await conectar()
   const sql = 'select * from clientes where cli_id=?;'
-  const [clientes] = await conexao.query(sql, [id])
+  const [clientes] = await conexao.query(sql, [id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 
   if (clientes && clientes.length > 0) return clientes[0]
   else return {}
@@ -92,13 +108,19 @@ export async function listarClientes() {
 export async function criarCliente(cli_nome, cli_tel, cli_cep, cli_num) {
   const conexao = await conectar()
   const sql = 'insert into clientes (cli_nome, cli_tel, cli_cep , cli_num) values (?,?,?,?);'
-  return await conexao.query(sql, [cli_nome, cli_tel, cli_cep, cli_num])
+  return await conexao.query(sql, [cli_nome, cli_tel, cli_cep, cli_num], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 export async function atualizarCliente(nome, telefone, cep, numero, codigo) {
   const conexao = await conectar()
   const sql = 'update clientes set cli_nome=?,  cli_tel=?, cli_cep=? , cli_num=? where cli_id=?;'
-  await conexao.query(sql, [nome, telefone, cep, numero, codigo])
+  await conexao.query(sql, [nome, telefone, cep, numero, codigo], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 // Fornecedor
@@ -107,13 +129,19 @@ export async function atualizarCliente(nome, telefone, cep, numero, codigo) {
 export async function criarFornecedor(for_nome, for_tel, for_desc, for_cep, for_num) {
   const conexao = await conectar()
   const sql = 'insert into fornecedores (for_nome, for_tel, for_desc, for_cep, for_num) values (?,?,?,?,?);'
-  return await conexao.query(sql, [for_nome, for_tel, for_desc, for_cep, for_num])
+  return await conexao.query(sql, [for_nome, for_tel, for_desc, for_cep, for_num], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 export async function recuperarFornecedor(id) {
   const conexao = await conectar()
   const sql = 'select * from fornecedores where for_id=?;'
-  const [fornecedores] = await conexao.query(sql, [id])
+  const [fornecedores] = await conexao.query(sql, [id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
   if (fornecedores && fornecedores.length > 0) return fornecedores[0]
   else return {}
 }
@@ -121,7 +149,10 @@ export async function recuperarFornecedor(id) {
 export async function atualizarFornecedor(for_nome, for_tel, for_desc, for_cep, for_num, codigo) {
   const conexao = await conectar()
   const sql = 'update fornecedores set for_nome=?, for_tel=?,for_desc=? , for_cep=? , for_num=? where for_id=?;'
-  await conexao.query(sql, [for_nome, for_tel, for_desc, for_cep, for_num, codigo])
+  await conexao.query(sql, [for_nome, for_tel, for_desc, for_cep, for_num, codigo], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }
 
 export async function listarFornecedores() {
@@ -129,4 +160,49 @@ export async function listarFornecedores() {
   const sql = 'select * from fornecedores;'
   const [fornecedores] = await conexao.query(sql)
   return fornecedores
+}
+
+//chegada
+
+export async function listarChegada() {
+  const conexao = await conectar()
+  const sql = 'select * from chegada;'
+  const [produtos] = await conexao.query(sql)
+  return produtos
+}
+
+export async function listarSaida() {
+  const conexao = await conectar()
+  const sql = 'select * from saida;'
+  const [produtos] = await conexao.query(sql)
+  return produtos
+}
+
+export async function salvarChegada(values) {
+  const conexao = await conectar()
+  const sql = 'insert into chegada (id_prod, quant_adic, id_for, data) values ?;'
+  console.log(values)
+  await conexao.query(sql, [values], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
+}
+
+export async function salvarSaida(values) {
+  const conexao = await conectar()
+  const sql = 'insert into saida (id_prod, quant_sub, id_cli, data) values ?;'
+  console.log(values)
+  await conexao.query(sql, [values], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
+}
+
+export async function atualizarProdutoQuantidade(quantidade, id) {
+  const conexao = await conectar()
+  const sql = 'update produtos set prod_quant=? where prod_id=?;'
+  await conexao.query(sql, [quantidade, id], function (err) {
+    if (err) throw err
+    conexao.end()
+  })
 }

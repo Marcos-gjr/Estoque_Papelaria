@@ -15,7 +15,7 @@ export default function AlterarFornecedor(props) {
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Telefone</FormLabel>
-            <Input name='for_tel' defaultValue={props.fornecedor ? props.fornecedor.for_tel : ''} />
+            <Input name='for_tel' type='number' defaultValue={props.fornecedor ? props.fornecedor.for_tel : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Descrição</FormLabel>
@@ -23,15 +23,15 @@ export default function AlterarFornecedor(props) {
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>CEP</FormLabel>
-            <Input name='for_cep' defaultValue={props.fornecedor ? props.fornecedor.for_cep : ''} />
+            <Input name='for_cep' type='number' defaultValue={props.fornecedor ? props.fornecedor.for_cep : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Numero</FormLabel>
-            <Input name='for_num' defaultValue={props.fornecedor ? props.fornecedor.for_num : ''} />
+            <Input name='for_num' type='number' defaultValue={props.fornecedor ? props.fornecedor.for_num : ''} />
           </FormControl>
           <Flex justify='center' align='center' direction='column'>
             <Input mb={6} type='submit' value='Salvar' w={'14rem'} />
-            <Link color='red' href={props.cancelar} textAlign='center' w={'4rem'}>
+            <Link color='red' href={'/listagemfornecedores'} textAlign='center' w={'4rem'}>
               Cancelar
             </Link>
           </Flex>

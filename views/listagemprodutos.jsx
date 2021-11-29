@@ -12,7 +12,7 @@ export default function ListagemProdutos(props) {
           <Link href='/logout'>Logout</Link>
         </Flex>
         <Link href='/criarproduto'>
-          <Button>Criar Produto</Button>
+          <Button mb={4}>Criar Produto</Button>
         </Link>
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>

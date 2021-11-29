@@ -5,7 +5,14 @@ import {
   criarProduto,
   criarCliente,
   atualizarFornecedor,
-  criarFornecedor
+  criarFornecedor,
+  listarFornecedores,
+  salvarChegada,
+  listarProdutos,
+  recuperarProduto,
+  atualizarProdutoQuantidade,
+  listarClientes,
+  salvarSaida
 } from './banco.js'
 
 export async function postLogin(req, res) {
@@ -112,6 +119,128 @@ export async function postCriarFornecedor(req, res) {
 
     await criarFornecedor(for_nome, for_tel, for_desc, for_cep, for_num)
     res.redirect('/listagemfornecedores')
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function postChegada(req, res) {
+  if (req.session.usuario) {
+    const rows = []
+    const fornecedores = await listarFornecedores()
+    const produtos = await listarProdutos()
+    if (Array.isArray(req.body.codigo)) {
+      for (let index = 0; index < req.body.codigo.length; index++) {
+        const testObject = {}
+        testObject.codigo = req.body.codigo[index]
+        testObject.quantidade = req.body.quantidade[index]
+        testObject.fornecedor = Array.isArray(req.body.fornecedor) ? req.body.fornecedor[0] : req.body.fornecedor
+        testObject.horario = Array.isArray(req.body.horario) ? req.body.horario[0] : req.body.horario
+        rows.push(testObject)
+      }
+    } else {
+      const codigo = req.body.codigo
+      const quantidade = req.body.quantidade
+      const fornecedor = req.body.fornecedor
+      const horario = req.body.horario
+
+      rows.push({ codigo, quantidade, fornecedor, horario })
+    }
+    if (req.body.buttonAction === 'Adicionar') {
+      if (!req.body.codigo[0] || !req.body.quantidade[0] || !req.body.fornecedor || !req.body.horario) {
+        rows.shift()
+        if (!rows || rows.length < 1) {
+          res.render('chegada', { fornecedores, produtos, error: 'Campos vazios!' })
+        } else {
+          res.render('chegada', { fornecedores, produtos, rows, error: 'Campos vazios!' })
+        }
+      } else {
+        res.render('chegada', { fornecedores, produtos, rows })
+      }
+    } else {
+      const rowsArray = []
+
+      rows.shift()
+
+      if (!rows || rows.length < 1) {
+        res.render('chegada', { fornecedores, produtos, error: 'Sem linhas!' })
+      } else {
+        for (const row of rows) {
+          const test = []
+          test[0] = Number(row.codigo)
+          test[1] = Number(row.quantidade)
+          test[2] = Number(row.fornecedor)
+          test[3] = row.horario
+          rowsArray.push(test)
+          const produto = await recuperarProduto(row.codigo)
+          await atualizarProdutoQuantidade(Number(produto['prod_quant']) + Number(row.quantidade), row.codigo)
+        }
+        await salvarChegada(rowsArray)
+
+        res.redirect('/chegada')
+      }
+    }
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function postSaida(req, res) {
+  if (req.session.usuario) {
+    const rows = []
+    const clientes = await listarClientes()
+    const produtos = await listarProdutos()
+    if (Array.isArray(req.body.codigo)) {
+      for (let index = 0; index < req.body.codigo.length; index++) {
+        const testObject = {}
+        testObject.codigo = req.body.codigo[index]
+        testObject.quantidade = req.body.quantidade[index]
+        testObject.cliente = Array.isArray(req.body.cliente) ? req.body.cliente[0] : req.body.cliente
+        testObject.horario = Array.isArray(req.body.horario) ? req.body.horario[0] : req.body.horario
+        rows.push(testObject)
+      }
+    } else {
+      const codigo = req.body.codigo
+      const quantidade = req.body.quantidade
+      const cliente = req.body.cliente
+      const horario = req.body.horario
+
+      rows.push({ codigo, quantidade, cliente, horario })
+    }
+    if (req.body.buttonAction === 'Adicionar') {
+      if (!req.body.codigo[0] || !req.body.quantidade[0] || !req.body.cliente || !req.body.horario) {
+        rows.shift()
+        if (!rows || rows.length < 1) {
+          res.render('saida', { clientes, produtos, error: 'Campos vazios!' })
+        } else {
+          res.render('saida', { clientes, produtos, rows, error: 'Campos vazios!' })
+        }
+      } else {
+        res.render('saida', { clientes, produtos, rows })
+      }
+    } else {
+      const rowsArray = []
+
+      rows.shift()
+
+      if (!rows || rows.length < 1) {
+        res.render('saida', { clientes, produtos, error: 'Sem linhas!' })
+      } else {
+        for (const row of rows) {
+          const test = []
+          test[0] = Number(row.codigo)
+          test[1] = Number(row.quantidade)
+          test[2] = Number(row.cliente)
+          test[3] = row.horario
+          rowsArray.push(test)
+          const produto = await recuperarProduto(row.codigo)
+          await atualizarProdutoQuantidade(Number(produto['prod_quant']) - Number(row.quantidade), row.codigo)
+        }
+        await salvarSaida(rowsArray)
+
+        res.redirect('/saida')
+      }
+    }
   } else {
     res.redirect('/login')
   }

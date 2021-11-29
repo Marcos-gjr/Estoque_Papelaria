@@ -15,7 +15,7 @@ export default function AlterarProdutos(props) {
           </FormControl>
           <FormControl mb={6} w={'18rem'} isReadOnly>
             <FormLabel>Quantidade</FormLabel>
-            <Input defaultValue={props.produto ? props.produto.prod_quant : 0} border={0} />
+            <Input type='number' defaultValue={props.produto ? props.produto.prod_quant : 0} border={0} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Descrição</FormLabel>
@@ -23,7 +23,7 @@ export default function AlterarProdutos(props) {
           </FormControl>
           <Flex justify='center' align='center' direction='column'>
             <Input mb={6} type='submit' value='Salvar' w={'14rem'} />
-            <Link color='red' href={props.cancelar} textAlign='center' w={'4rem'}>
+            <Link color='red' href={'/listagemprodutos'} textAlign='center' w={'4rem'}>
               Cancelar
             </Link>
           </Flex>

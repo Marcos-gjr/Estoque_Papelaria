@@ -12,7 +12,7 @@ export default function clientes(props) {
           <Link href='/logout'>Logout</Link>
         </Flex>
         <Link href='/criarcliente'>
-          <Button>Inserir Cliente</Button>
+          <Button mb={4}>Inserir Cliente</Button>
         </Link>
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>
@@ -27,7 +27,6 @@ export default function clientes(props) {
               <Th w={'5%'}>CEP</Th>
               <Th w={'5%'}>Numero</Th>
               <Th w={'10%'}>Alterar</Th>
-              {/* <Th w={'10%'}>Excluir</Th> */}
             </Tr>
           </Thead>
           <Tbody w={'100%'}>
@@ -47,11 +46,6 @@ export default function clientes(props) {
                     Alterar
                   </Link>
                 </Td>
-                {/* <Td w={'10%'}>
-                    <Link color='red' href={`/excluircliente/${clientes['cli_id']}`}>
-                      Excluir
-                    </Link>
-                  </Td> */}
               </Tr>
             ))}
           </Tbody>

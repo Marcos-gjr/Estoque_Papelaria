@@ -1,6 +1,6 @@
 import React from 'react'
 import Layout from './layout.jsx'
-import { Input, Heading, Link, FormControl, FormLabel, Flex, Textarea } from '@chakra-ui/react'
+import { Input, Heading, Link, FormControl, FormLabel, Flex } from '@chakra-ui/react'
 
 export default function AlterarCliente(props) {
   return (
@@ -15,19 +15,19 @@ export default function AlterarCliente(props) {
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Telefone</FormLabel>
-            <Input name='cli_tel' defaultValue={props.cliente ? props.cliente.cli_tel : ''} />
+            <Input name='cli_tel' type='number' defaultValue={props.cliente ? props.cliente.cli_tel : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>CEP</FormLabel>
-            <Textarea name='cli_cep' defaultValue={props.cliente ? props.cliente.cli_cep : ''} />
+            <Input name='cli_cep' type='number' defaultValue={props.cliente ? props.cliente.cli_cep : ''} />
           </FormControl>
           <FormControl isRequired mb={6} w={'18rem'}>
             <FormLabel>Numero</FormLabel>
-            <Textarea name='cli_num' defaultValue={props.cliente ? props.cliente.cli_num : ''} />
+            <Input name='cli_num' type='number' defaultValue={props.cliente ? props.cliente.cli_num : ''} />
           </FormControl>
           <Flex justify='center' align='center' direction='column'>
             <Input mb={6} type='submit' value='Salvar' w={'14rem'} />
-            <Link color='red' href={props.cancelar} textAlign='center' w={'4rem'}>
+            <Link color='red' href={'/listagemclientes'} textAlign='center' w={'4rem'}>
               Cancelar
             </Link>
           </Flex>

@@ -1,4 +1,13 @@
-import { listarProdutos, recuperarProduto, listarClientes, recuperarCliente, recuperarFornecedor, listarFornecedores } from './banco.js'
+import {
+  listarProdutos,
+  recuperarProduto,
+  listarClientes,
+  recuperarCliente,
+  recuperarFornecedor,
+  listarFornecedores,
+  listarChegada,
+  listarSaida
+} from './banco.js'
 
 export async function getPrincipal(req, res) {
   if (req.session.usuario) {
@@ -26,15 +35,6 @@ export async function getListagemProdutos(req, res) {
   }
 }
 
-export async function getProdutosRecebidos(req, res) {
-  if (req.session.usuario) {
-    const produtos = await listarProdutos()
-    res.render('produtosrecebidos', { produtos })
-  } else {
-    res.redirect('/login')
-  }
-}
-
 export async function getFornecedores(req, res) {
   if (req.session.usuario) {
     const fornecedores = await listarFornecedores()
@@ -53,17 +53,34 @@ export async function getClientes(req, res) {
   }
 }
 
-export function getChegada(req, res) {
+export async function getChegada(req, res) {
   if (req.session.usuario) {
-    res.render('chegada')
+    const fornecedores = await listarFornecedores()
+    const produtos = await listarProdutos()
+
+    res.render('chegada', { fornecedores, produtos })
   } else {
     res.redirect('/login')
   }
 }
 
-export function getSaida(req, res) {
+export async function getSaida(req, res) {
   if (req.session.usuario) {
-    res.render('saida')
+    const clientes = await listarClientes()
+    const produtos = await listarProdutos()
+
+    res.render('saida', { clientes, produtos })
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function getProdutosRecebidos(req, res) {
+  if (req.session.usuario) {
+    const transacoes = await listarChegada()
+    const produtos = await listarProdutos()
+    const fornecedores = await listarFornecedores()
+    res.render('produtosrecebidos', { transacoes, produtos, fornecedores })
   } else {
     res.redirect('/login')
   }
@@ -71,8 +88,10 @@ export function getSaida(req, res) {
 
 export async function getProdutosVendidos(req, res) {
   if (req.session.usuario) {
+    const transacoes = await listarSaida()
     const produtos = await listarProdutos()
-    res.render('produtosvendidos', { produtos })
+    const clientes = await listarClientes()
+    res.render('produtosvendidos', { transacoes, produtos, clientes })
   } else {
     res.redirect('/login')
   }
@@ -105,7 +124,6 @@ export async function getAlterarProduto(req, res) {
       res.render('alterarproduto', {
         title: 'Alteração do Produto',
         produto,
-        cancelar: '/listagemprodutos',
         action: '/alterarproduto/' + codigo
       })
     }
@@ -118,7 +136,6 @@ export async function getCriarProduto(req, res) {
   if (req.session.usuario) {
     res.render('alterarproduto', {
       title: 'Criação de Produto',
-      cancelar: '/listagemprodutos',
       action: '/criarproduto'
     })
   } else {
@@ -131,7 +148,6 @@ export async function getCriarCliente(req, res) {
   if (req.session.usuario) {
     res.render('alterarcliente', {
       title: 'Criação de Cliente',
-      cancelar: '/listagemclientes',
       action: '/criarcliente'
     })
   } else {
@@ -163,7 +179,6 @@ export async function getCriarFornecedor(req, res) {
   if (req.session.usuario) {
     res.render('alterarfornecedor', {
       title: 'Criação de Fornecedor',
-      cancelar: '/listagemfornecedores',
       action: '/criarfornecedor'
     })
   } else {
@@ -182,7 +197,6 @@ export async function getAlterarFornecedor(req, res) {
       res.render('alterarfornecedor', {
         title: 'Alteração do Fornecedor',
         fornecedor,
-        cancelar: '/listagemfornecedores',
         action: '/alterarfornecedor/' + codigo
       })
     }

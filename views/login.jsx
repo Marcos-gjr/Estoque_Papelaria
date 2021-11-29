@@ -16,7 +16,11 @@ export default function HelloMessage(props) {
             <Input w={100} type='submit' value='Entrar' mt={6} />
           </Flex>
         </form>
-        {props.error && <Flex mt={6}>{props.error}</Flex>}
+        {props.error && (
+          <Flex color={'red'} mt={6}>
+            {props.error}
+          </Flex>
+        )}
         <Link href={'/esqueci'} my={6}>
           Esqueci minha senha
         </Link>

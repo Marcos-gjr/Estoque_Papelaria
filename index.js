@@ -29,7 +29,9 @@ import {
   postCriarProduto,
   postCriarCliente,
   postCriarFornecedor,
-  postAlterarFornecedor
+  postAlterarFornecedor,
+  postChegada,
+  postSaida
 } from './postMiddlewares.js'
 config()
 // TO DO remover body-parser
@@ -64,15 +66,19 @@ app.get('/listagemprodutos', getListagemProdutos)
 
 app.get('/produtosrecebidos', getProdutosRecebidos)
 
+app.get('/produtosvendidos', getProdutosVendidos)
+
 app.get('/listagemfornecedores', getFornecedores)
 
 app.get('/listagemclientes', getClientes)
 
 app.get('/chegada', getChegada)
 
+app.post('/chegada', postChegada)
+
 app.get('/saida', getSaida)
 
-app.get('/produtosvendidos', getProdutosVendidos)
+app.post('/saida', postSaida)
 
 app.get('/logout', getLogout)
 

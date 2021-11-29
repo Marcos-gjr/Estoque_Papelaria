@@ -14,39 +14,41 @@ export default function ProdutosRecebidos(props) {
         <Table w={'80%'} variant='simple'>
           <Thead w={'100%'}>
             <Tr>
-              <Th w={'5%'} isNumeric>
-                Codigo
-              </Th>
-              <Th w={'20%'}>Nome</Th>
-              <Th w={'10%'} isNumeric>
+              <Th w={'20%'}>Produto</Th>
+              <Th w={'15%'} isNumeric>
                 Quantidade
               </Th>
-              <Th w={'45%'}>Descrição</Th>
-              <Th w={'10%'}>Alterar</Th>
-              {/* <Th w={'10%'}>Excluir</Th> */}
+              <Th w={'30%'}>Fornecedor</Th>
+              <Th w={'10%'}>Data</Th>
             </Tr>
           </Thead>
           <Tbody w={'100%'}>
-            {props.produtos.map((produto, index) => (
+            {props.transacoes.map((transacao, index) => (
               <Tr key={index}>
-                <Td w={'5%'} isNumeric>
-                  {produto['codigo']}
+                <Td w={'5%'}>
+                  {(() => {
+                    for (let i = 0; i < props.produtos.length; i++) {
+                      if (props.produtos[i].prod_id == transacao['id_prod']) {
+                        return transacao['id_prod'] + ': ' + props.produtos[i].prod_nome
+                      }
+                    }
+                    return transacao['id_prod']
+                  })()}
                 </Td>
-                <Td w={'20%'}>{produto['nome']}</Td>
-                <Td w={'10%'} isNumeric>
-                  {produto['quantidade']}
+                <Td w={'15%'} isNumeric>
+                  {transacao['quant_adic']}
                 </Td>
-                <Td w={'45%'}>{produto['descricao']}</Td>
-                <Td w={'10%'}>
-                  <Link color='red' href={`/alterar/${produto['codigo']}`}>
-                    Alterar
-                  </Link>
+                <Td w={'20%'}>
+                  {(() => {
+                    for (let i = 0; i < props.fornecedores.length; i++) {
+                      if (props.fornecedores[i].for_id == transacao['id_for']) {
+                        return transacao['id_for'] + ': ' + props.fornecedores[i].for_nome
+                      }
+                    }
+                    return transacao['id_for']
+                  })()}
                 </Td>
-                {/* <Td w={'10%'}>
-                  <Link color='red' href={`/excluir/${produto['codigo']}`}>
-                    Excluir
-                  </Link>
-                </Td> */}
+                <Td w={'15%'}>{transacao['data'].toLocaleDateString('pt-BR')}</Td>
               </Tr>
             ))}
           </Tbody>

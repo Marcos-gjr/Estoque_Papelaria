@@ -5,7 +5,7 @@ import { Flex, Link, Heading, Table, Thead, Tr, Th, Tbody, Td, Text } from '@cha
 export default function HelloMessage(props) {
   let produtosAcabando = []
   if (props.produtos) {
-    produtosAcabando = props.produtos.filter(produto => produto['prod_quant'] <= 5)
+    produtosAcabando = props.produtos.filter(produto => produto['prod_quant'] < 100)
   }
 
   return (
@@ -25,7 +25,7 @@ export default function HelloMessage(props) {
           <Link href='/saida'>Saída</Link>
         </Flex>
         <Flex w={'80%'} direction='column' justify='center' align='center'>
-          <Heading>{'Produtos quase em falta ( <6 )'}</Heading>
+          <Heading>{'Produtos quase em falta ( <100 )'}</Heading>
           {produtosAcabando.length >= 1 ? (
             <Table w={'80%'} variant='simple' my={10}>
               <Thead w={'100%'}>
