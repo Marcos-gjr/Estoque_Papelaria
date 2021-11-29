@@ -41,10 +41,10 @@ const app = express()
 app.use(session({ secret: 'SessionSecret: uhterere', resave: true, saveUninitialized: true }))
 app.use(express.urlencoded({ extended: true }))
 // Debug
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   req.session.usuario = true
   next()
-})
+}) */
 app.engine('jsx', createEngine())
 app.set('view engine', 'jsx')
 app.set('views', './views')
