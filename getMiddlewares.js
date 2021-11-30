@@ -12,7 +12,11 @@ import {
 export async function getPrincipal(req, res) {
   if (req.session.usuario) {
     const produtos = await listarProdutos()
-    res.render('principal', { produtos })
+    let produtosAcabando = []
+    if (produtos) {
+      produtosAcabando = produtos.filter(produto => produto['prod_quant'] < 100)
+    }
+    res.render('principal', { produtosAcabando })
   } else {
     res.redirect('/login')
   }
@@ -80,7 +84,8 @@ export async function getProdutosRecebidos(req, res) {
     const transacoes = await listarChegada()
     const produtos = await listarProdutos()
     const fornecedores = await listarFornecedores()
-    res.render('produtosrecebidos', { transacoes, produtos, fornecedores })
+    const transacoesFiltradas = transacoes
+    res.render('produtosrecebidos', { transacoesFiltradas, produtos, fornecedores })
   } else {
     res.redirect('/login')
   }
@@ -91,7 +96,8 @@ export async function getProdutosVendidos(req, res) {
     const transacoes = await listarSaida()
     const produtos = await listarProdutos()
     const clientes = await listarClientes()
-    res.render('produtosvendidos', { transacoes, produtos, clientes })
+    const transacoesFiltradas = transacoes
+    res.render('produtosvendidos', { transacoesFiltradas, produtos, clientes })
   } else {
     res.redirect('/login')
   }

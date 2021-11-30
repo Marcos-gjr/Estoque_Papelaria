@@ -3,11 +3,6 @@ import Layout from './layout.jsx'
 import { Flex, Link, Heading, Table, Thead, Tr, Th, Tbody, Td, Text } from '@chakra-ui/react'
 
 export default function HelloMessage(props) {
-  let produtosAcabando = []
-  if (props.produtos) {
-    produtosAcabando = props.produtos.filter(produto => produto['prod_quant'] < 100)
-  }
-
   return (
     <Layout>
       <Flex justify='center' align='center' direction='column'>
@@ -26,7 +21,7 @@ export default function HelloMessage(props) {
         </Flex>
         <Flex w={'80%'} direction='column' justify='center' align='center'>
           <Heading>{'Produtos quase em falta ( <100 )'}</Heading>
-          {produtosAcabando.length >= 1 ? (
+          {props.produtosAcabando.length >= 1 ? (
             <Table w={'80%'} variant='simple' my={10}>
               <Thead w={'100%'}>
                 <Tr>
@@ -37,7 +32,7 @@ export default function HelloMessage(props) {
                 </Tr>
               </Thead>
               <Tbody w={'100%'}>
-                {produtosAcabando.map((produto, index) => (
+                {props.produtosAcabando.map((produto, index) => (
                   <Tr key={index}>
                     <Td w={'25%'}>{produto['prod_id']}</Td>
                     <Td w={'25%'}>{produto['prod_nome']}</Td>

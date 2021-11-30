@@ -66,7 +66,7 @@ export default function chegada(props) {
                 {props.error}
               </Flex>
             )}
-            <Table variant='simple' my={10} w={1200}>
+            <Table variant='simple' my={10} w={1100}>
               <Thead>
                 <Tr>
                   <Th w={'25%'}>Produto</Th>

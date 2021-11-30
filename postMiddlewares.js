@@ -12,7 +12,9 @@ import {
   recuperarProduto,
   atualizarProdutoQuantidade,
   listarClientes,
-  salvarSaida
+  salvarSaida,
+  listarChegada,
+  listarSaida
 } from './banco.js'
 
 export async function postLogin(req, res) {
@@ -241,6 +243,48 @@ export async function postSaida(req, res) {
         res.redirect('/saida')
       }
     }
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function postProdutosRecebidos(req, res) {
+  if (req.session.usuario) {
+    const transacoes = await listarChegada()
+    const produtos = await listarProdutos()
+    const fornecedores = await listarFornecedores()
+    const dataInicial = new Date(req.body.dataInicial)
+    const dataFinal = new Date(req.body.dataFinal)
+
+    const transacoesFiltradas = []
+    for (const transacao of transacoes) {
+      if (new Date(transacao['data']) > dataInicial && new Date(transacao['data']) <= dataFinal) {
+        transacoesFiltradas.push(transacao)
+      }
+    }
+
+    res.render('produtosrecebidos', { transacoesFiltradas, produtos, fornecedores, dataInicial, dataFinal })
+  } else {
+    res.redirect('/login')
+  }
+}
+
+export async function postProdutosVendidos(req, res) {
+  if (req.session.usuario) {
+    const transacoes = await listarSaida()
+    const produtos = await listarProdutos()
+    const clientes = await listarClientes()
+    const dataInicial = new Date(req.body.dataInicial)
+    const dataFinal = new Date(req.body.dataFinal)
+
+    const transacoesFiltradas = []
+    for (const transacao of transacoes) {
+      if (new Date(transacao['data']) > dataInicial && new Date(transacao['data']) <= dataFinal) {
+        transacoesFiltradas.push(transacao)
+      }
+    }
+
+    res.render('produtosvendidos', { transacoesFiltradas, produtos, clientes, dataInicial, dataFinal })
   } else {
     res.redirect('/login')
   }
